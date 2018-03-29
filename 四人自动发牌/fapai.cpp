@@ -2,15 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-void initCard(int a[], int n);
+void initCard(int a[], const int n);
 void randCard(int a[], int b[][13]);
 void sortCard(int a[][13]);
-void printCard(int a[13], int low, int top, char type[10]);
-void printFinal(int a[][13]);
+void printCard(const int a[13], int low, int top, const char type[10]);
+void printFinal(const int a[][13]);
 
 int main()
 {
-	int initcards[52] = {0}, cards[4][13] = {0};
+	int initcards[52] = {0};	//ç‰Œå †
+	int cards[4][13]  = {0};	//ç©å®¶çš„ç‰Œ
 	
 	initCard(initcards, 52);
 	randCard(initcards, cards);
@@ -22,11 +23,11 @@ int main()
 }
 
 /*
-	³õÊ¼»¯ÅÆ¶Ñ
-	1  ~ 13 ±íÊ¾·½ÌÒÅÆ  14 ~ 26 ±íÊ¾Ã·ÌÒÅÆ
-	27 ~ 39 ±íÊ¾ºì»¨ÅÆ  40 ~ 52 ±íÊ¾ºÚ¿éÅÆ
+	åˆå§‹åŒ–ç‰Œå †
+	1  ~ 13 è¡¨ç¤ºæ–¹æ¡ƒç‰Œ  14 ~ 26 è¡¨ç¤ºæ¢…æ¡ƒç‰Œ
+	27 ~ 39 è¡¨ç¤ºçº¢èŠ±ç‰Œ  40 ~ 52 è¡¨ç¤ºé»‘å—ç‰Œ
 */
-void initCard(int a[], int n)
+void initCard(int a[], const int n)
 {
 	int i;
 	for(i=0; i<n; ++i)
@@ -34,31 +35,31 @@ void initCard(int a[], int n)
 }
 
 
-//	·ÖÅäÅÆ¶Ñ£¬a[]ÊÇ³õÊ¼»¯ºÃµÄÅÆ¶Ñ£¬b[4][]ÊÇ´ı·ÖÅäµÄÅÆ¶Ñ
+//	åˆ†é…ç‰Œå †ï¼Œa[]æ˜¯åˆå§‹åŒ–å¥½çš„ç‰Œå †ï¼Œb[4][]æ˜¯å¾…åˆ†é…çš„ç‰Œå †
 void randCard(int a[], int b[][13])
 {
 	int i, j, index;
-	srand((unsigned)time(NULL));    //  Ëæ»úÖÖ×Ó
+	srand((unsigned)time(NULL));    //  éšæœºç§å­
 	
-	for(i=0; i<4; i++)              //  Îª 4¸öÈË·ÖÅÆ
+	for(i=0; i<4; i++)              //  ä¸º 4ä¸ªäººåˆ†ç‰Œ
 	{
-		for(j=0; j<13; )            //  Ã¿ÈË 13ÕÅ
+		for(j=0; j<13; )            //  æ¯äºº 13å¼ 
 		{
-			index = rand() % 52;        //  ³õÊ¼ÅÆ¶ÑËæ»úÏÂ±ê
-			if(a[index] != 0)           //  ÈôÕâÕÅÅÆÃ»ÓĞ±»·ÖÅä
+			index = rand() % 52;        //  åˆå§‹ç‰Œå †éšæœºä¸‹æ ‡
+			if(a[index] != 0)           //  è‹¥è¿™å¼ ç‰Œæ²¡æœ‰è¢«åˆ†é…
 			{
-				b[i][j++] = a[index];   //  Ìí¼Óµ½·ÖÅäÅÆ¶ÑÖĞÈ¥
-				a[index] = 0;           //  ³õÊ¼ÅÆ¶ÑÕâÕÅÅÆÖµ¹é 0£¨²»ÄÜÔÙÊ¹ÓÃ£©
+				b[i][j++] = a[index];   //  æ·»åŠ åˆ°åˆ†é…ç‰Œå †ä¸­å»
+				a[index] = 0;           //  åˆå§‹ç‰Œå †è¿™å¼ ç‰Œå€¼å½’ 0ï¼ˆä¸èƒ½å†ä½¿ç”¨ï¼‰
 			}
 		}
 	}
 }
 
-//  Îª 4¸öÈËµÄÅÆ´Ó´óµ½Ğ¡ÅÅĞò£¬ºóÃæ±éÀúÊä³öÊ±¼´´Ó´óµ½Ğ¡Êä³ö
+//  ä¸º 4ä¸ªäººçš„ç‰Œä»å¤§åˆ°å°æ’åºï¼Œåé¢éå†è¾“å‡ºæ—¶å³ä»å¤§åˆ°å°è¾“å‡º
 void sortCard(int a[][13])
 {
 	int i, j, k, tmp;
-	for(i=0; i<4; i++)  //  µÚ i ¸öÈË
+	for(i=0; i<4; i++)  //  ç¬¬ i ä¸ªäºº
 	{
 		for(j=0; j<12; j++)
 		{
@@ -75,17 +76,17 @@ void sortCard(int a[][13])
 	}
 }
 
-//  ´òÓ¡Ò»ÖÖ»¨É«µÄÅÆĞÍ£¬low ºÍ top ÊÇ¸ÃÖÖ»¨É«µÄÏÂ½çÖµºÍÉÏ½çÖµ£¬type[]ÊÇ»¨É«Ãû×Ö
-void printCard(int a[13], int low, int top, char type[10])
+//  æ‰“å°ä¸€ç§èŠ±è‰²çš„ç‰Œå‹ï¼Œlow å’Œ top æ˜¯è¯¥ç§èŠ±è‰²çš„ä¸‹ç•Œå€¼å’Œä¸Šç•Œå€¼ï¼Œtype[]æ˜¯èŠ±è‰²åå­—
+void printCard(const int a[13], int low, int top, const char type[10])
 {
 	int i, tmp;
-	printf("%s£º", type);
+	printf("%sï¼š", type);
 
 	for(i=0; i<13; i++)
 	{
-		if(a[i]<low || a[i]>top)    //  ²»ÔÚ´Ë·¶Î§£¬ËµÃ÷²»ÊÇ´Ë»¨É«ÅÆ
+		if(a[i]<low || a[i]>top)    //  ä¸åœ¨æ­¤èŒƒå›´ï¼Œè¯´æ˜ä¸æ˜¯æ­¤èŠ±è‰²ç‰Œ
 			continue;
-		tmp = a[i] % 13 + 1;        //  1Îª A£¬¶ø10¡¢11¡¢12¡¢13·Ö±ğÎªT¡¢J¡¢Q¡¢K
+		tmp = a[i] % 13 + 1;        //  1ä¸º Aï¼Œè€Œ10ã€11ã€12ã€13åˆ†åˆ«ä¸ºTã€Jã€Qã€K
 
 		if(tmp > 1 && tmp <= 9)
 			printf("%d", tmp);
@@ -103,17 +104,17 @@ void printCard(int a[13], int low, int top, char type[10])
 	printf("\n\n");
 }
 
-//  ´òÓ¡ËÄ¸öÈËµÄÅÆĞÍ
-void printFinal(int a[][13])
+//  æ‰“å°å››ä¸ªäººçš„ç‰Œå‹
+void printFinal(const int a[][13])
 {
 	int i, j, tmp;
 	for(i=0; i<4; i++)
 	{
-		printf("µÚ%dÎ»Íæ¼ÒµÄÅÆĞÍÈçÏÂ£º\n", i+1);
+		printf("ç¬¬%dä½ç©å®¶çš„ç‰Œå‹å¦‚ä¸‹ï¼š\n", i+1);
 
-		printCard(a[i], 40, 52, "ºÚÌÒÅÆ");
-		printCard(a[i], 27, 39, "ºìÌÒÅÆ");
-		printCard(a[i], 14, 26, "Ã·»¨ÅÆ");
-		printCard(a[i],  1, 13, "·½¿éÅÆ");
+		printCard(a[i], 40, 52, "é»‘æ¡ƒç‰Œ");
+		printCard(a[i], 27, 39, "çº¢æ¡ƒç‰Œ");
+		printCard(a[i], 14, 26, "æ¢…èŠ±ç‰Œ");
+		printCard(a[i],  1, 13, "æ–¹å—ç‰Œ");
 	}
 }		
